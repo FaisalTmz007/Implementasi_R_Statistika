@@ -1,0 +1,57 @@
+#baca data
+install.packages("readr")
+library(readr)
+data_kost <- read.csv("data.csv")
+
+
+#menghitung jumlah data
+jumlah_data <- length(data_kost$HARGA)
+
+#menghitung range
+range <- max(data_kost$HARGA)-min(data_kost$HARGA)
+print (range)
+
+#menghitung mean
+
+mean <- mean (data_kost$HARGA)
+
+#menghitung median 
+
+median <- median (data_kost$HARGA)
+
+#membuat function modus dan menghitung modus
+
+modus <- function(x){
+  uniqx <- unique(x)
+  uniqx[which.max(tabulate(match(x,uniqx)))]
+}
+modus <- modus (data_kost$HARGA)
+
+#menghitung standart_deviasi
+
+standar_deviasi <- sd(data_kost$HARGA, na.rm = TRUE)
+
+#membuat function simpangan rerata
+total_x_xi <- 0
+simpangan_rerata <- function(x){
+  for (n in x) {
+    # Menghitung total x-xi dari data
+    x_xi <- abs(n - mean)
+    x_xi <- round(x_xi,digits=2)
+    total_x_xi <- total_x_xi + x_xi
+  }
+  # Mengembalikan nilai simpangan rerata dengan rumus
+  # sum(x_xi)/ jumlah data
+  return(round(total_x_xi/jumlah_data, digits=2))
+}
+simpangan_rata <- simpangan_rerata(data_kost$HARGA)
+
+
+
+print (paste("mean =", mean))
+print (paste("modus =", modus))
+print (paste("range =", range))
+print (paste("median =", median))
+print (paste("standar deviasi =", standar_deviasi))
+print (paste("simpangan rata - rata =", simpangan_rata))
+
